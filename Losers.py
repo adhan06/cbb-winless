@@ -17,11 +17,17 @@ with open("records.csv", "wb") as ofile:
 		tds = tr.find_all("td")[3:]
 		i = 0
 		check = "0-"
+		tencheck = "10-"
+		twentycheck = "20-"
+		thirtycheck = "30-"
 		while (i < len(tds)-2):
 			record = tds[i+2].get_text().encode("utf-8")
-			if record.find("0-") == -1:
+			if record.find(check) == -1:
 				i = i + 3
 			else:
-				team = tds[i].get_text().encode("utf-8")
-				f.writerow([team, record])
-				i = i + 3
+				if record.find(tencheck) == -1 and record.find(twentycheck) == -1 and record.find(thirtycheck) == -1:
+					team = tds[i].get_text().encode("utf-8")
+					f.writerow([team, record])
+					i = i + 3
+				else:
+					i = i + 3
